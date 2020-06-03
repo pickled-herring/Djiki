@@ -1,0 +1,54 @@
+DJIKI PROJECT DESIGN
+
+FIRST STAGE
+	First stage is simple, perhaps the most simplest:
+
+	Make a webapp with 2 sites: index & edit
+
+	edit gives you a form that you can use to change the index content.
+	That's it.  See templates and views and forms from django
+
+SECOND STAGE
+
+	There are several jobs that need doing before moving to the second
+	stage. Firstly, You will need to start writing test, or at least learn
+	how to write tests so we can be sure that our project is secure and
+	robust and whatever. Secondly you need to start keeping track of the
+	changes to the project. Create a git repository.
+
+	Feature wise, I want to add change tracking. This might mean adding
+	another python package.
+
+	Secondly, We need to change the model. Currently, the only table in the
+	database is the content table. If we're gonna keep track of changes we
+	need to have a second table that stores the edits. Those edits have a
+	foreign key pointing to the page that was changed, the change (a diff?
+	a previous version?), the time of the edit and any notes about the
+	edit. The content table itself needs to be updated. Each row represents
+	a page and each page is going to need to have a title and the body text
+	at least.
+
+	I need to figure out how to format plain text into html too. This
+	problem shouldn't be too hard since it's pretty detached from the whole
+	system, but still.
+
+	We're still on the pilot version of this software. I want to keep this
+	as clean as possible. Or at least as professional as possible.
+
+	in sum:
+	For the orm:
+		Content:
+		  + Title
+		  + body text
+		  ? last edit
+
+		Edits:
+		  + Content object (foreign key)
+		  + the change
+		  + date
+		  + notes
+		  ? contact
+
+	We'll work with 1 page first before creating entire wiki. We need
+	multiple pages first if we're gonna work with auto link generation.
+
