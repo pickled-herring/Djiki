@@ -15,17 +15,16 @@
 
 
 <body>
-You are now editting {{ title }}<br>
-<form action="{% url 'submit_edit'%}" method="post">
+You are adding a new page<br>
+<form action="{% url 'submit_new'%}" method="post">
 {% csrf_token %}
 <label for="title">Title</label><br>
-<textarea name="title" rows="1" cols="80" required>{{ title }}</textarea>
+<textarea name="title" rows="1" cols="80">{{ title }}</textarea>
 <label for="message">Message</label><br>
-<textarea name="message" rows="20" cols="80" required>{{ text }}</textarea>
-<input name="url" type="hidden" value="{{url_}}">
+<textarea name="message" rows="20" cols="80">{{ text }}</textarea>
 <br><br>
 <input type="submit">
 </form>
 </body>
 
-</html>
+
