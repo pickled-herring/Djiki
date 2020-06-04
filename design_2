@@ -1,0 +1,28 @@
+SECOND STAGE DOCS
+
+	The design file already has some specifications written out but I still
+	need to consolidate what the design will look like and what the
+	requirements will be.
+
+    Models
+	Content
+	 + id
+	 + title
+	 + url
+	 + body text
+	 + last edit
+
+    Interface
+	djiki/?page-argument
+	  jump to page, if it doesnt exist, 404
+	djiki/edit/?page-argument
+	  form the edit that page
+	djiki/new/
+	  form to create a new page
+	djiki/submit-edit
+	djiki/submit-new
+	  pages to submit forms form edit and new
+
+    Testing
+	Make sure the interface does what its supposed to, check return codes
+	mainly.

@@ -52,3 +52,33 @@ SECOND STAGE
 	We'll work with 1 page first before creating entire wiki. We need
 	multiple pages first if we're gonna work with auto link generation.
 
+    Testing.
+
+	How do we test software? What does software need to be secure and
+	robust? I don't want to just write tests like shots in the dark. I need
+	100% coverage of code. The test need to test all possible combinations
+	of arguments I throw at the system. They also need to test for
+	correctness.
+
+	Right now I have index and edit submit. So i need to check that edit
+	works, submit works and index works. That would be if I had the first
+	stage. What about the second stage?
+
+	The second stage should have index, edit, list_edits, submit. Its
+	models consists of content and changes. I need to make sure index,
+	edit, list_edits, and submit when run dont return errors, or return the
+	right errors. I need to runchecks on the models to make sure they work,
+	that I can create, edit and whatever.
+
+    Design Considerations
+
+	Actually would it be preferrable to do arbitrary number of pages first
+	and then change tracking later? What are the pros and cons?
+
+	Writing tests might be easier later. Since we've scaled up to arbitrary
+	number of pages. Already anyway. Also how would you test change
+	tracking anyway?
+
+	The models will be less complex if it were just multiple pages and
+	index, since it's only one table. We're gonna have to worry about the
+	edit table later anyway. So what do we do?

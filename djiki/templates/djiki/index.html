@@ -1,0 +1,28 @@
+
+<!DOCTYPE html>
+<html>
+
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'djiki/style.css' %}">
+
+<head>
+<meta charset="utf-8">
+<title>Djiki</title>
+</head>
+
+
+
+
+<body>
+{% if text %}
+	<div>
+		<p>{{ text |safe }}</p><br>
+		<p> Last edit: {{ last_edit }}</p>
+		<a href="{% url 'edit' %}">click here to edit</a>
+	</div>
+{% else %}
+    <p>Nothing at this site</p>
+{% endif %}
+</body>
+
+</html>
