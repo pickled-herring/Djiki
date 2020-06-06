@@ -3,6 +3,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.db import IntegrityError
 from .models import Content
+from .utils import preprocess
 
 
 # Create your views here.
@@ -12,7 +13,7 @@ def index(request):
 def page(request, page_url):
 	c = get_object_or_404(Content, url=page_url)
 	context = {
-		'text' : c.text,
+		'text' : preprocess(c.text),
 		'url_': c.url,
 		'title' : c.title,
 		'last_edit' : c.last_edit.strftime('%Y-%m-%d %H:%M'),

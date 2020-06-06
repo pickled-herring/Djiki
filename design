@@ -82,3 +82,28 @@ SECOND STAGE
 	The models will be less complex if it were just multiple pages and
 	index, since it's only one table. We're gonna have to worry about the
 	edit table later anyway. So what do we do?
+
+STAGE 3
+
+	Clean up
+	Change tracking
+	Independent front page
+	text to html
+	auto link generation
+
+	I'd say we're still in our pilot version and not in official yet. But
+	who knows. For now let's focus on 2 things: clean up and an independent
+	front page
+
+    Independent home page:
+	A terrible idea, it introduces special cases.
+
+    Text to Html
+	What should I use? Right now changing new line to <br> might just be enough.
+	images and links will be a bit harder how should I consider it?
+
+    Auto link generation.
+
+	Here I've put documentation preperation to its own module. There are
+	many ways to go from here. We can choose what we use to develop text to
+	html, link generation and further stuffs.
