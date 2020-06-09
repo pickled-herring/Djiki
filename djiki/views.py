@@ -3,17 +3,17 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.db import IntegrityError
 from .models import Content
-from .utils import preprocess
+from .utils import process
 
 
 # Create your views here.
 def index(request):
-	return page(request, 'front')
+	return page(request, 'FrontPage')
 
 def page(request, page_url):
 	c = get_object_or_404(Content, url=page_url)
 	context = {
-		'text' : preprocess(c.text),
+		'text' : process(c.text),
 		'url_': c.url,
 		'title' : c.title,
 		'last_edit' : c.last_edit.strftime('%Y-%m-%d %H:%M'),

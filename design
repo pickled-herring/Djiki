@@ -85,11 +85,11 @@ SECOND STAGE
 
 STAGE 3
 
-	Clean up
-	Change tracking
-	Independent front page
-	text to html
-	auto link generation
+	- Clean up
+	- Change tracking
+	x Independent front page
+	+ text to html
+	+ auto link generation
 
 	I'd say we're still in our pilot version and not in official yet. But
 	who knows. For now let's focus on 2 things: clean up and an independent
@@ -99,11 +99,71 @@ STAGE 3
 	A terrible idea, it introduces special cases.
 
     Text to Html
-	What should I use? Right now changing new line to <br> might just be enough.
-	images and links will be a bit harder how should I consider it?
+	What should I use? Right now changing new line to <br> might just be
+	enough. images and links will be a bit harder how should I consider
+	it?
 
     Auto link generation.
+	How should we do link generation? please look at string processign in
+	python for more details.
 
 	Here I've put documentation preperation to its own module. There are
 	many ways to go from here. We can choose what we use to develop text to
 	html, link generation and further stuffs.
+
+	Ok wow that was much quicker than I anticipated for link generation and
+	text to html. Link generation is not like automatic link generation but
+	more like c2.wiki's link generation. Whereas Ward Cunningham uses
+	CamelCases to detect a page link I'm using "li:".
+
+	I still need to do imaging but we can achieve that quite easily.
+
+	Before we continue, we should clean up the code
+CLEAN UP:
+
+	There's removing any duplicates
+	 + Tests have some duplication we could remove
+
+	Then there's decoupling. View wise I think we're ok
+	Maybe page edit and creation functions should go to the Content table.
+
+	There's modularizing so making sure nothing is that big. Or that
+	everything is understandably modularized to a certain point. For this I
+	can think of:
+	 - Make page editing and page creation should be their own functions,
+	   submit_edit and submit_new only use that function.
+
+
+
+
+
+
+	OK now for the big change
+    Change Tracking
+
+	This will require more large scale changes We'll need to add an
+	entirely new table and library to deal with its functionalities.
+
+	First, interfacing, how do we plan to do it?
+
+	/list-edits/all
+	  List all edits
+	/list-edits/<page>
+	  List all edits by page
+	/view-edit/<id>
+	  view an edit
+
+	Models:
+	Edits
+	 + id
+	 + page
+	 + change
+	 + author
+	 + date
+
+	Content
+	 + id
+	 + title <- Is this still necessary?
+	 + url
+	 + body text
+	 + last edit

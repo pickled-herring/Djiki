@@ -4,6 +4,10 @@ from django.utils import timezone
 from .models import Content
 
 # Create your tests here.
+
+def submit_post(s, page, data):
+	return s.client.post(reverse(page), data, follow=True)
+
 class ViewTests(TestCase):
 	def setUp(self):
 		return Content.objects.create(url='FrontPage',
@@ -24,42 +28,54 @@ class ViewTests(TestCase):
 			test_('new', 200, ())
 
 	def test_edit(self):
-		response = self.client.post(reverse('submit_edit'),{
-				'url':'FrontPage',
-				'title':'Front page',
-				'message':'I have now changed the front page',
-				}, follow = True)
+		data = {
+			'url':'FrontPage',
+			'title':'Front page',
+			'message':'I have now changed the front page',
+		}
 
+		response = submit_post(self,'submit_edit',data)
 		self.assertEqual(response.status_code, 200)
 		self.assertContains(response, "changed")
 
 	def test_edit_fail(self):
-		response = self.client.post(reverse('submit_edit'),{
-				'url':'front__',
-				'title':'Front page',
-				'message':'I have now changed the front page',
-				}, follow = True)
+		data = {
+			'url':'front__',
+			'title':'Front page',
+			'message':'I have now changed the front page',
+		}
 
+		response = submit_post(self,'submit_edit',data)
 		self.assertEqual(response.status_code, 404)
 
 	def test_new(self):
-		response = self.client.post(reverse('submit_new'),{
-				'title':'Test Page',
-				'message':'This page is a test',
-				}, follow=True)
+		data = {
+			'title':'Test Page',
+			'message':'This page is a test',
+		}
 
+		response = submit_post(self,'submit_new',data)
 		self.assertEqual(response.status_code, 200)
 		self.assertContains(response, "This page is a test")
 
 	def test_new_duplicate(self):
-		response = self.client.post(reverse('submit_new'),{
-				'title':'FrontPage',
-				'message':'This page is a test',
-				}, follow=True)
+		data = {
+			'title':'FrontPage',
+			'message':'This page is a test',
+		}
 
+		response = submit_post(self,'submit_new',data)
 		self.assertEqual(response.status_code, 200)
 		self.assertContains(response, "duplicate")
 
-	def test_date(self):
-		print(timezone.now())
+	def test_link(self):
+# Change this to a different set of tests since we're not testing views here.
+		data = {
+			'url':'FrontPage',
+			'title':'Front page',
+			'message':'I have now changed the li:TestPage',
+		}
 
+		response = submit_post(self,'submit_edit',data)
+		self.assertEqual(response.status_code, 200)
+		self.assertContains(response, 'href="/djiki/p/TestPage"')
