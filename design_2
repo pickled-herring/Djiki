@@ -17,6 +17,13 @@ CONSOLIDATED DOCS
 	 + body text
 	 + last edit
 
+	Edits
+	 + id
+	 + Content object (foreign key)
+	 + the change
+	 + date
+	 + notes
+
     Interface
 	djiki/
 	  front page, should list other pages?
@@ -29,7 +36,17 @@ CONSOLIDATED DOCS
 	djiki/submit-edit
 	djiki/submit-new
 	  pages to submit forms edit and new
+	djiki/list_edits/all
+	  List all edits
+	djiki/list-edits/<page>
+	  List all edits by page
+	djiki/view-edit/<id>
+	  view an edit
 
     Testing
 	Make sure the interface does what its supposed to, check return codes
 	mainly.
+
+	Test text processing
+
+	Test database saves and updates.

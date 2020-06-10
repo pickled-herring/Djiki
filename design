@@ -132,6 +132,7 @@ CLEAN UP:
 	can think of:
 	 - Make page editing and page creation should be their own functions,
 	   submit_edit and submit_new only use that function.
+	 should it be?
 
 
 
@@ -167,3 +168,7 @@ CLEAN UP:
 	 + url
 	 + body text
 	 + last edit
+
+	Testing:
+	 + Testing all the interfaces to make sure they reply
+	 + Making sure all edits are saved

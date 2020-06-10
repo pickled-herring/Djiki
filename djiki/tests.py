@@ -2,6 +2,7 @@ from django.test import TestCase
 from django.urls import reverse
 from django.utils import timezone
 from .models import Content
+from .utils import process, diff
 
 # Create your tests here.
 
@@ -32,6 +33,7 @@ class ViewTests(TestCase):
 			'url':'FrontPage',
 			'title':'Front page',
 			'message':'I have now changed the front page',
+			'author':'harry',
 		}
 
 		response = submit_post(self,'submit_edit',data)
@@ -43,6 +45,7 @@ class ViewTests(TestCase):
 			'url':'front__',
 			'title':'Front page',
 			'message':'I have now changed the front page',
+			'author':'harry',
 		}
 
 		response = submit_post(self,'submit_edit',data)
@@ -68,14 +71,20 @@ class ViewTests(TestCase):
 		self.assertEqual(response.status_code, 200)
 		self.assertContains(response, "duplicate")
 
-	def test_link(self):
-# Change this to a different set of tests since we're not testing views here.
-		data = {
-			'url':'FrontPage',
-			'title':'Front page',
-			'message':'I have now changed the li:TestPage',
-		}
+class UtilTests(TestCase):
+	def setUp(self):
+		return Content.objects.create(url='FrontPage',
+			title = 'Front page',
+			text = "Welcome to the front page",
+			)
 
-		response = submit_post(self,'submit_edit',data)
-		self.assertEqual(response.status_code, 200)
-		self.assertContains(response, 'href="/djiki/p/TestPage"')
+	def test_link(self):
+		html = process("li:FrontPage")
+		self.assertTrue("<a href=" in html)
+		self.assertTrue(reverse('page', args=("FrontPage",)) in html)
+
+	def test_diff(self):
+		text1 = "Lorem ipsum dolor sit amet"
+		text2 = "Lorem ipsum odor sit amet"
+		d = diff(text1, text2)
+		self.assertTrue("-1 +1" in d)

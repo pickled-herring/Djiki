@@ -2,8 +2,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.db import IntegrityError
-from .models import Content
-from .utils import process
+from .models import Content, Edits
+from .utils import process, diff
 
 
 # Create your views here.
@@ -39,6 +39,12 @@ def new(request):
 def submit_edit(request):
 	page_url = request.POST['url']
 	c = get_object_or_404(Content, url=page_url)
+
+	c.edits_set.create(
+		diff = diff(c.text, request.POST['message']),
+		author = request.POST['author']
+		)
+
 	c.text = request.POST['message']
 	c.title = request.POST['title']
 	c.save()
