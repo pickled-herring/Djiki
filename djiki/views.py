@@ -6,7 +6,6 @@ from .models import Content, Edits
 from .utils import process, diff
 
 
-# Create your views here.
 def index(request):
 	return page(request, 'FrontPage')
 
@@ -64,3 +63,19 @@ def submit_new(request):
 		return HttpResponseRedirect(
 			reverse('page', args=(url_,))
 			)
+
+def list_edits_all(request):
+	return HttpResponse("listing all edits")
+
+def list_edits(request, page_url):
+	return HttpResponse("listing edits for page %s" % page_url)
+
+def view_edit(request, edit_id):
+	e = get_object_or_404(Edits, pk=edit_id)
+	context = {
+		'date' : e.date.strftime('%Y-%m-%d %H:%M'),
+		'url_' : e.page.url,
+		'diff' : e.diff.replace('\n','<br>'),
+		'name' : e.author,
+	}
+	return render(request, 'djiki/view_edit.html', context)

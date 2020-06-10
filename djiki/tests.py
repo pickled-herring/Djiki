@@ -27,6 +27,9 @@ class ViewTests(TestCase):
 			test_('page', 404, ('f',))
 			test_('edit', 404, ('f',))
 			test_('new', 200, ())
+			test_('list_edits_all', 200, ())
+			test_('list_edits', 200, ('FrontPage',))
+			test_('view_edit', 200, (1,))
 
 	def test_edit(self):
 		data = {
