@@ -1,0 +1,33 @@
+
+
+<!DOCTYPE html>
+<html>
+
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'djiki/style.css' %}">
+
+<head>
+<meta charset="utf-8">
+<title>Djiki</title>
+</head>
+
+
+
+
+<body>
+{% if edits_list %}
+	<p> Showing most recent changes for {{ page }}: </p>
+	<ul>
+	{% for e in edits_list %}
+		<li> <a href={% url 'view_edit' e.id %}>
+		{{ e.date }}: Edit to {{e.page.url}} by {{e.author}}
+		</a></li>
+	{% endfor %}
+	</ul>
+
+{% else %}
+	<p>No changes to show</p>
+{% endif %}
+</body>
+
+</html>

@@ -2,6 +2,7 @@ from markdown2 import Markdown
 from django.urls import reverse
 import re
 import difflib
+from html import escape
 
 def link_gen(string):
 	# Replace li:<link> with the link syntax in markdown
@@ -16,7 +17,7 @@ def md(string):
 	return m.convert(string)
 
 def process(string):
-	proc = [link_gen, md]
+	proc = [escape, link_gen, md]
 	for f in proc:
 		string = f(string)
 	return string

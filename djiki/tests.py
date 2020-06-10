@@ -4,12 +4,12 @@ from django.utils import timezone
 from .models import Content
 from .utils import process, diff
 
-# Create your tests here.
-
 def submit_post(s, page, data):
 	return s.client.post(reverse(page), data, follow=True)
 
 class ViewTests(TestCase):
+	# TODO: Still need to test edits
+
 	def setUp(self):
 		return Content.objects.create(url='FrontPage',
 			title = 'Front page',
@@ -21,15 +21,16 @@ class ViewTests(TestCase):
 			response = self.client.get(reverse(page, args=args))
 			self.assertEqual(response.status_code, code)
 
-			test_('index', 200, ())
-			test_('page', 200, ('FrontPage',))
-			test_('edit', 200, ('FrontPage',))
-			test_('page', 404, ('f',))
-			test_('edit', 404, ('f',))
-			test_('new', 200, ())
-			test_('list_edits_all', 200, ())
-			test_('list_edits', 200, ('FrontPage',))
-			test_('view_edit', 200, (1,))
+		test_('index', 200, ())
+		test_('page', 200, ('FrontPage',))
+		test_('edit', 200, ('FrontPage',))
+		test_('page', 404, ('f',))
+		test_('edit', 404, ('f',))
+		test_('new', 200, ())
+		test_('list_edits_all', 200, ())
+		test_('list_edits', 200, ('FrontPage',))
+		test_('view_edit', 404, (1,))
+		test_('list_edits', 404, ('f',))
 
 	def test_edit(self):
 		data = {
@@ -91,3 +92,5 @@ class UtilTests(TestCase):
 		text2 = "Lorem ipsum odor sit amet"
 		d = diff(text1, text2)
 		self.assertTrue("-1 +1" in d)
+
+	# Need to test escape

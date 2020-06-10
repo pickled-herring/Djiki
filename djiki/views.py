@@ -65,10 +65,21 @@ def submit_new(request):
 			)
 
 def list_edits_all(request):
-	return HttpResponse("listing all edits")
+	edit_list = Edits.objects.order_by('-date')[:50]
+	context = {
+		'page':"all pages",
+		'edits_list':edit_list,
+	}
+	return render(request, 'djiki/list_edits.html', context)
 
 def list_edits(request, page_url):
-	return HttpResponse("listing edits for page %s" % page_url)
+	c = get_object_or_404(Content, url=page_url)
+	edit_list = c.edits_set.all().order_by('-date')[:50]
+	context = {
+		'page':page_url,
+		'edits_list':edit_list,
+	}
+	return render(request, 'djiki/list_edits.html', context)
 
 def view_edit(request, edit_id):
 	e = get_object_or_404(Edits, pk=edit_id)
