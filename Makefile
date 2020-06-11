@@ -9,6 +9,9 @@ migrate: $(APP)/models.py
 	$(CC) makemigrations $(APP)
 	$(CC) migrate
 
+static:
+	$(CC) collectstatic
+
 test: $(APP)/tests.py
 	$(CC) test $(APP)
 

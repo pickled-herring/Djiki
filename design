@@ -172,3 +172,4 @@ CLEAN UP:
 	Testing:
 	 + Testing all the interfaces to make sure they reply
 	 + Making sure all edits are saved
+	 + Test for static file deployment

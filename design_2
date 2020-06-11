@@ -7,7 +7,9 @@ CONSOLIDATED DOCS
     Dependencies
 	 + Django3.0.6
 	 + markdown2
-	 + python3.7
+
+    Runtime
+	 + python 3.7.7
 
     Models
 	Content
@@ -22,7 +24,7 @@ CONSOLIDATED DOCS
 	 + Content object (foreign key)
 	 + the change
 	 + date
-	 + notes
+	 + author
 
     Interface
 	djiki/
