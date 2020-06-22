@@ -1,0 +1,132 @@
+THIS DOCUMENTATION HOLDS THE CONCEPT, DOCUMENTATION and HOW TOS FOR DJIKI
+
+    The What and Why of Djiki
+
+	Djiki is a wiki engine built for the hobbyist. It prioritises
+	simplicity, flexibility, and ease of use for both the user and the
+	developer. The Djiki engine is primarily made for individuals,
+	projects, and small groups that don't want the heavy list of features
+	and administrative tasks that come with an enterprise level wiki
+	system. Features include easy to read formatting, editting, and change
+	tracking.
+
+	What is a wiki anyway? The essence of the wiki concept is as follows:
+	+ Wikis are websites where anyone can edit and create content
+	+ Wikis promote meaningful topic association by linking together
+	related topics.
+	+ Wikis seek to involve the typical user in the ongoing process of
+	creation and collaboration
+	Essentially wikis are collaborative databases of text suitable for
+	creating, browsing, searching, and maintaining information.
+
+	Djiki is also my first attempt at writing a useful programming product
+	that others can use, deploy and extend to their own needs and tastes.
+
+    Building Locally
+
+	Dependencies:
+	+ Python 3.7+
+	+ Django 3.0+ (pip package)
+	+ markdown2 (pip package)
+
+
+	Clone the repository and switch to the local branch:
+		git clone https://github.com/pickled-herring/Djiki.git
+		cd Djiki
+		git checkout local
+	Create a django superuser for yourself so you can fix things just in
+	case:
+		python manage.py createsuperuser
+
+	you can then run database migrations using make:
+		make migrate
+
+	then run the server using make:
+		make
+
+	The system is now live and you can go to where ever you are hosting this
+	site using: <server address>:8000. The link will likely return a 404
+	because it is looking for a page with the 'FrontPage' url in its
+	contents.
+
+	You can add this first page by going to the /new subdirectory. Make
+	sure to make the title of this page 'FrontPage' or 'Front Page'. You
+	can change this later if you want. Once you finish hit submit and your
+	original link will point to this page.
+	
+	You can add also this first page by going to /admin subdirectory
+	and manually adding a page with the url of 'FrontPage' to the Contents
+	table under the Djiki database. If you go back to your front page, it
+	will show the contents that you've added.
+
+    Deploying to Heroku
+
+	While the local branch of the repository holds code that can run as a
+	standalone, the master branch holds code that is meant to be deployed
+	on heroku. This means some differences in environment which are
+	accounted for in settings.py.
+
+	Assuming you've already cloned the repository, You can quickly deploy
+	to heroku with:
+		heroku git:remote -a <your-app-name>
+		git push heroku master
+
+	Don't forget to create your super user and migrate databases
+	afterwards.
+		heroku run python manage.py createsuperuser
+		heroku run make migrate
+
+	Heroku will also require you to create static files, which
+	you can do using:
+		heroku run make static
+
+	Make sure you set the configuration variables for heroku:
+		heroku config:set DJANGO_DEBUG=False
+		heroku config:set DJANGO_SECRET_KEY=<some random key>
+	Setting the DJANGO_DEBUG variable on heroku means that you when you are
+	given a standard 404 error instead of the django debug 404 page.
+	Setting the DJANGO_SECRET_KEY=<some random key> secures communications
+	between your app and your users.
+
+	You can then start your app by running:
+		heroku run make
+
+	Adding your first page is similar to how its outlined in local
+	deployment
+
+    Interface
+
+	<domain>/
+	  points to page with 'FrontPage' url. if there is no such page, 404.
+	<domain>/p/<page>
+	  jump to page, if it doesnt exist, 404
+	<domain>/search
+	  search for a page.
+	<domain>/edit/<page>
+	  edit that page
+	<domain>/new/
+	  create a new page
+	<domain>/list_edits/all
+	  List recent edits, most recent edit on top.
+	<domain>/list-edits/<page>
+	  List recent edits for that page.
+	<domain>/view-edit/<id>
+	  view an edit
+
+	For text editting, the app uses markdown to format its content. To link
+	pages that exist within the wiki, use 'li:<url>'. For example,
+	'li:FrontPage' will generate a link to the front page of your wiki.
+
+    Modifying
+
+    Changing the underlying html template
+	The webapp uses a template system that you can find under
+	/djiki/templates/djiki/ in the repository. you can also change the css
+	file by editting the /djiki/static/djiki/style.css file.
+
+    Changing the text processing
+	The Djiki Engine uses markdown for text formatting however you can
+	change that yourself under /djiki/utils.py. The main function that
+	processes input text into page html is process(). Should you need to
+	create your own text formatting rules or features, write a function for
+	it then add it to the proc list in process().
